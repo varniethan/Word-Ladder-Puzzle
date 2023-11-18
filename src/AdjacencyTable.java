@@ -2,6 +2,14 @@ public class AdjacencyTable {
 
     private GraphNode[] table;
 
+    /*
+    * Takes an array of Strings
+    * Creates a fresh hash table containing one graphNode object labelled with each string in the array
+    * All strings are distinct
+    * Initially each node has no neighbours
+    * Breath-first search
+    * Static method -> Creates a graph corresponding to the word-ladder game
+    * */
     public AdjacencyTable(String[] nodes) {
 	// add your constructor code here
     }
