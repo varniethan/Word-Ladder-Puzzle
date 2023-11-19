@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbc7da88-3516-40df-96b6-09cc4cfaf33f" name="Changes" comment="TODO: Queue needs to be created">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdjacencyTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="cbc7da88-3516-40df-96b6-09cc4cfaf33f" name="Changes" comment="TODO: Notfinding path" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,7 +50,7 @@
       <updated>1700153551029</updated>
       <workItem from="1700153552019" duration="1012000" />
       <workItem from="1700260772568" duration="724000" />
-      <workItem from="1700381859232" duration="4416000" />
+      <workItem from="1700381859232" duration="4719000" />
     </task>
     <task id="LOCAL-00001" summary="Files added">
       <option name="closed" value="true" />
@@ -72,15 +68,35 @@
       <option name="project" value="LOCAL" />
       <updated>1700346068733</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="TODO: Notfinding path">
+      <option name="closed" value="true" />
+      <created>1700389055115</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700389055115</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Files added" />
     <MESSAGE value="TODO: Queue needs to be created" />
-    <option name="LAST_COMMIT_MESSAGE" value="TODO: Queue needs to be created" />
+    <MESSAGE value="TODO: Notfinding path" />
+    <option name="LAST_COMMIT_MESSAGE" value="TODO: Notfinding path" />
   </component>
 </project>
