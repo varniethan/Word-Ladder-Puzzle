@@ -4,40 +4,14 @@ public class AdjacencyTable {
 
     private GraphNode[] table;
 
-    public int calculateHash(String s) {
-        int hashCode = s.hashCode();
-        int hashValue;
-        hashValue = (hashCode & 0x7fffffff) % this.table.length;
-        return hashValue;
-    }
-
-    public boolean checkCollisions(int hashValue, String s) {
-        boolean isCollision = false;
-        if (this.table[hashValue] != null) {
-            if (!this.table[hashValue].label.equals(s)) {
-                isCollision = true;
-            }
-        }
-        return isCollision;
-    }
-
-   //resolve collisions with open addressing with linear probing
-   public int probe(int hashValue) {
-       int probeIndex = hashValue;
-       while (this.table[probeIndex] != null) {
-           probeIndex = (probeIndex + 1) % this.table.length;
-       }
-       return probeIndex;
-   }
-
     /*
-    * Takes an array of Strings
-    * Creates a fresh hash table containing one graphNode object labelled with each string in the array
-    * All strings are distinct
-    * Initially each node has no neighbours
-    * Breath-first search
-    * Static method -> Creates a graph corresponding to the word-ladder game
-    * */
+     * Takes an array of Strings
+     * Creates a fresh hash table containing one graphNode object labelled with each string in the array
+     * All strings are distinct
+     * Initially each node has no neighbours
+     * Breath-first search
+     * Static method -> Creates a graph corresponding to the word-ladder game
+     * */
     public AdjacencyTable(String[] nodes) {
         int capacity = 2*nodes.length;
         this.table = new GraphNode[capacity];
@@ -56,6 +30,33 @@ public class AdjacencyTable {
     public GraphNode[] getTable() {
         return table;
     }
+
+    public int calculateHash(String s) {
+        int hashCode = s.hashCode();
+        int hashValue;
+        hashValue = (hashCode & 0x7fffffff) % this.table.length;
+        return hashValue;
+    }
+
+    public boolean checkCollisions(int hashValue, String s) {
+        boolean isCollision = false;
+        if (this.table[hashValue] != null) {
+            if (!this.table[hashValue].label.equals(s)) {
+                isCollision = true;
+            }
+        }
+        return isCollision;
+    }
+
+    //resolve collisions with open addressing with linear probing
+    public int probe(int hashValue) {
+        int probeIndex = hashValue;
+        while (this.table[probeIndex] != null) {
+            probeIndex = (probeIndex + 1) % this.table.length;
+        }
+        return probeIndex;
+    }
+
 
     // search the hash table for a node with label s
     public boolean find(String s) {
@@ -100,7 +101,7 @@ public class AdjacencyTable {
     public String getPath(String s, String t) {
         GraphNode start = this.get(s);
         GraphNode end = this.get(t);
-        if (start != null && end != null) {
+        if (start == null || end == null) {
             return "There is no path from " + s + " to " + t + ".";
         }
 
@@ -120,11 +121,14 @@ public class AdjacencyTable {
         {
             GraphNode currentNode = queue.remove();
             for (int i = 0; i < currentNode.neighbours.length; i++) {
-                if (!visited.contains(currentNode.neighbours[i])) {
+                if (currentNode.neighbours[i] == null) {
+                    break;
+                }
+                if (!visited.contains(this.get(currentNode.neighbours[i])) && currentNode.neighbours[i] != null) {
                     GraphNode neighbour = this.get(currentNode.neighbours[i]);
-                    pathMap.put(neighbour, pathMap.get(currentNode) + " " + neighbour.label);
+                    pathMap.put(neighbour, pathMap.get(currentNode) + "-" + neighbour.label);
                     if (neighbour.equals(end)) {
-                       return pathMap.get(neighbour); //path found
+                        return pathMap.get(neighbour); //path found
                     }
                     else {
                         queue.add(neighbour);
@@ -133,14 +137,14 @@ public class AdjacencyTable {
                 }
             }
         }
-        return "There is no path from " + s + " to " + t + ".";
+        return "There is no path from " + s + " to " + t;
     }
 
     public boolean existsPath(String s, String t) {
         GraphNode start = this.get(s);
         GraphNode end = this.get(t);
         boolean existsPath = false;
-        if (start != null && end != null) {
+        if (start == null && end == null) {
             existsPath = false;
         }
 
@@ -179,7 +183,7 @@ public class AdjacencyTable {
         GraphNode start = this.get(s);
         GraphNode end = this.get(t);
         int pathLength = 0;
-        if (start != null && end != null) {
+        if (start == null && end == null) {
             pathLength = 0;
         }
 
@@ -216,7 +220,7 @@ public class AdjacencyTable {
                 }
             }
         }
-return pathLength;
+        return pathLength;
     }
 
     public static List<String> generateNeighbours(String word, String[] words) {
@@ -244,8 +248,11 @@ return pathLength;
         for (String word : words) {
             List<String> neighbours = generateNeighbours(word, words);
             for (String neighbour : neighbours) {
-                if ((isValidWord(neighbour, words)) && (!neighbour.equals(word))) {
+                System.out.println("neighbour" + neighbour);
+                System.out.println("word" + word);
+                if ((neighbour != null) && (isValidWord(neighbour, words)) && (!neighbour.equals(word))) {
                     GraphNode wordNode = wordLadder.get(word);
+                    if (wordNode != null) {
                     wordNode.addNeighbour(neighbour);
                 }
             }
