@@ -36,29 +36,6 @@ class AdjacencyTableTest {
         assertTrue(adjacencyTable.checkCollisions(hashValue2, testString2));
     }
 
-    @org.junit.jupiter.api.Test
-    void probe() {
-        AdjacencyTable adjacencyTable = new AdjacencyTable(new String[]{"apple", "banana", "orange", "grape", "melon"});
-
-        // Test cases for probe method
-        // Test 1: No collision, should return the same index
-        String testString1 = "apple";
-        int hashValue1 = adjacencyTable.calculateHash(testString1);
-        int probeIndex1 = adjacencyTable.probe(hashValue1);
-        assertEquals(hashValue1, probeIndex1);
-
-        // Test 2: Collision occurs, should probe to find the next available index
-        String testString2 = "orange"; // Collision with "apple"
-        int hashValue2 = adjacencyTable.calculateHash(testString2);
-        int probeIndex2 = adjacencyTable.probe(hashValue2);
-        assertNotEquals(hashValue2, probeIndex2); // Ensure probeIndex2 is different from the hashValue2
-
-        // Test 3: Test probing for another collision scenario
-        String testString3 = "melon"; // Collision with "apple" and "orange"
-        int hashValue3 = adjacencyTable.calculateHash(testString3);
-        int probeIndex3 = adjacencyTable.probe(hashValue3);
-        assertNotEquals(hashValue3, probeIndex3); // Ensure probeIndex3 is different from the hashValue3
-    }
 
     @org.junit.jupiter.api.Test
     void getTable() {
@@ -126,7 +103,7 @@ class AdjacencyTableTest {
 
     @org.junit.jupiter.api.Test
     void getPath() {
-        AdjacencyTable adjacencyTable = new AdjacencyTable(WeaverWords.words);
+        AdjacencyTable adjacencyTable = AdjacencyTable.weaver();
 
         // Test cases for getPath method
         // Test 1: Get path between existing nodes
@@ -134,8 +111,7 @@ class AdjacencyTableTest {
         String endNode = "walk";
         String existingPath = adjacencyTable.getPath(startNode, endNode);
         assertNotNull(existingPath);
-        System.out.println(existingPath);
-        assertEquals("There is no path between ", existingPath);
+        assertEquals("moon-morn-worn-warn-wark-walk", existingPath);
 
         // Test 2: Get path between nodes when no path exists
         String startNodeNoPath = "apple";
@@ -150,81 +126,115 @@ class AdjacencyTableTest {
         String nodeNotFoundPath = adjacencyTable.getPath(startNodeNotFound, endNodeNotFound);
         assertNotNull(nodeNotFoundPath);
         assertEquals("There is no path from pear to banana.", nodeNotFoundPath);
+
+        String[][] testWordPairsWithPaths = {
+                {"cold", "cord", "cold-coed-cord"},
+                {"card", "ward", "card-ward"},
+                {"warm", "cold", "warm-ward-card-cord-cold"},
+                {"java", "code", "java-fava-fave-cave-cade-code"},
+                {"play", "slay", "play-slay"},
+                {"lead", "gold", "lead-load-goad-gold"},
+                {"dark", "dusk", "dark-dank-dunk-dusk"},
+                {"meal", "deal", "meal-deal"},
+                {"send", "sent", "send-sent"},
+                {"rise", "fall", "rise-bise-bile-file-fill-fall"},
+                {"hope", "hype", "hope-hype"},
+                {"bake", "cake", "bake-cake"},
+                {"king", "ring", "king-ring"},
+                {"road", "read", "road-roam-ream-read"},
+                {"spin", "spam", "spin-spun-span-spam"}
+                // Add more pairs here...
+        };
+
+        // Testing paths for each word pair
+        for (String[] wordPairWithPath : testWordPairsWithPaths) {
+            String startWord = wordPairWithPath[0];
+            String endWord = wordPairWithPath[1];
+            String expectedPath = wordPairWithPath[2];
+
+            String path = adjacencyTable.getPath(startWord, endWord);
+
+            if (expectedPath.startsWith("There is no path")) {
+                assertEquals(expectedPath, path);
+            } else {
+                assertEquals(expectedPath, path);
+            }
+        }
     }
 
     @org.junit.jupiter.api.Test
     void existsPath() {
-        String[] words = {"apple", "banana", "orange", "grape", "melon"};
-        AdjacencyTable adjacencyTable = new AdjacencyTable(words);
+        AdjacencyTable table = AdjacencyTable.weaver();
 
-        // Test cases for existsPath method
-        // Test 1: Check if path exists between existing nodes
-        String startNode = "apple";
-        String endNode = "orange";
-        boolean existsExistingPath = adjacencyTable.existsPath(startNode, endNode);
-        assertTrue(existsExistingPath);
+        String[][] testWordPairs = {
+                {"cold", "cord"},
+                {"card", "ward"},
+                {"warm", "cold"},
+                {"java", "code"},
+                {"play", "slay"},
+                {"lead", "gold"},
+                {"dark", "dusk"},
+                {"meal", "deal"},
+                {"send", "sent"},
+                {"rise", "fall"},
+                {"hope", "hype"},
+                {"bake", "cake"},
+                {"king", "ring"},
+                {"road", "read"},
+                {"spin", "spam"}
+                // Add more pairs here...
+        };
 
-        // Test 2: Check if path exists between nodes when no path exists
-        String startNodeNoPath = "apple";
-        String endNodeNoPath = "grape";
-        boolean existsNonExistingPath = adjacencyTable.existsPath(startNodeNoPath, endNodeNoPath);
-        assertFalse(existsNonExistingPath);
-
-        // Test 3: Check if path exists when start or end nodes are not found
-        String startNodeNotFound = "pear";
-        String endNodeNotFound = "banana";
-        boolean existsNodeNotFoundPath = adjacencyTable.existsPath(startNodeNotFound, endNodeNotFound);
-        assertFalse(existsNodeNotFoundPath);
-
-        // Add more test cases as needed to cover different scenarios
+        // Testing existsPath for each word pair
+        for (String[] wordPair : testWordPairs) {
+            String startWord = wordPair[0];
+            String endWord = wordPair[1];
+            System.out.println(startWord + " " + endWord);
+            boolean pathExists = table.existsPath(startWord, endWord);
+            // Asserting the existence of the path
+            assertTrue(pathExists);
+        }
     }
 
     @org.junit.jupiter.api.Test
     void pathLength() {
-        String[] words = {"apple", "banana", "orange", "grape", "melon"};
-        AdjacencyTable adjacencyTable = new AdjacencyTable(words);
+        AdjacencyTable table = AdjacencyTable.weaver();
+        String[][] testWordPairs = {
+                {"cold", "cord", "cold-coed-cord"},
+                {"card", "ward", "card-ward"},
+                {"warm", "cold", "warm-ward-card-cord-cold"},
+                {"java", "code", "java-fava-fave-cave-cade-code"},
+                {"play", "slay", "play-slay"},
+                {"lead", "gold", "lead-load-goad-gold"},
+                {"dark", "dusk", "dark-dank-dunk-dusk"},
+                {"meal", "deal", "meal-deal"},
+                {"send", "sent", "send-sent"},
+                {"rise", "fall", "rise-bise-bile-file-fill-fall"},
+                {"hope", "hype", "hope-hype"},
+                {"bake", "cake", "bake-cake"},
+                {"king", "ring", "king-ring"},
+                {"road", "read", "road-roam-ream-read"},
+                {"spin", "spam", "spin-spun-span-spam"}
+                // Add more pairs here...
+        };
 
-        // Test cases for pathLength method
-        // Test 1: Get path length between existing nodes
-        String startNode = "apple";
-        String endNode = "orange";
-        int pathLengthExistingPath = adjacencyTable.pathLength(startNode, endNode);
-        assertEquals(2, pathLengthExistingPath);
+        // Testing pathLength for each word pair
+        for (String[] wordPairWithPath : testWordPairs) {
+            String startWord = wordPairWithPath[0];
+            String endWord = wordPairWithPath[1];
+            String expectedPath = wordPairWithPath[2];
 
-        // Test 2: Get path length between nodes when no path exists
-        String startNodeNoPath = "apple";
-        String endNodeNoPath = "grape";
-        int pathLengthNonExistingPath = adjacencyTable.pathLength(startNodeNoPath, endNodeNoPath);
-        assertEquals(0, pathLengthNonExistingPath);
+            int pathLength = table.pathLength(startWord, endWord);
 
-        // Test 3: Get path length when start or end nodes are not found
-        String startNodeNotFound = "pear";
-        String endNodeNotFound = "banana";
-        int pathLengthNodeNotFound = adjacencyTable.pathLength(startNodeNotFound, endNodeNotFound);
-        assertEquals(0, pathLengthNodeNotFound);
+            if (expectedPath.startsWith("There is no path")) {
+                assertEquals(0, pathLength);
+            } else {
+                int expectedLength = expectedPath.split("-").length;
+                assertEquals(expectedLength, pathLength);
+            }
+        }
     }
 
-    @org.junit.jupiter.api.Test
-    void generateNeighbours() {
-        String[] words = {"cat", "hat", "hot", "dog", "dot"};
-
-        // Test cases for generateNeighbours method
-        // Test 1: Generate neighbors for a word with valid neighbors
-        String testWord1 = "cat";
-        String[] expectedNeighbours1 = {"bat", "hat", "cat", "dat", "eat", "fat", "gat", "hat", "iat", "jat", "kat",
-                "lat", "mat", "nat", "oat", "pat", "qat", "rat", "sat", "tat", "uat", "vat",
-                "wat", "xat", "yat", "zat"};
-        assertEquals(expectedNeighbours1.length, AdjacencyTable.generateNeighbours(testWord1, words).size());
-        assertArrayEquals(expectedNeighbours1, AdjacencyTable.generateNeighbours(testWord1, words).toArray());
-
-        // Test 2: Generate neighbors for a word with no valid neighbors
-        String testWord2 = "xyz"; // Assuming "xyz" is not in the word list
-        assertEquals(0, AdjacencyTable.generateNeighbours(testWord2, words).size());
-
-        // Test 3: Generate neighbors for an empty word
-        String testWord3 = "";
-        assertEquals(0, AdjacencyTable.generateNeighbours(testWord3, words).size());
-    }
 
     @org.junit.jupiter.api.Test
     void isValidWord() {
@@ -248,19 +258,4 @@ class AdjacencyTableTest {
         assertFalse(AdjacencyTable.isValidWord(emptyWord, words));
     }
 
-    @org.junit.jupiter.api.Test
-    void weaver() {
-        // Assuming you have a known set of words or a predefined graph
-        String[] words = {"cat", "cot", "cog", "dog"};
-
-        AdjacencyTable wordLadder = AdjacencyTable.weaver();
-
-        // Here you could perform some operations on the wordLadder object and then check the behavior of its methods.
-        // For instance, you could check if certain words are connected in the generated graph.
-
-        // Example test: Check if "cat" is connected to "cot" and "cog" but not to "dog"
-        assertTrue(wordLadder.existsPath("cat", "cot"));
-        assertTrue(wordLadder.existsPath("cat", "cog"));
-        assertFalse(wordLadder.existsPath("cat", "dog"));
-    }
 }

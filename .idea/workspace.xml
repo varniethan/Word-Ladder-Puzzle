@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbc7da88-3516-40df-96b6-09cc4cfaf33f" name="Changes" comment="TODO: Notfinding path">
-      <change afterPath="$PROJECT_DIR$/src/AdjacencyTableTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Word-Ladder-Puzzle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Word-Ladder-Puzzle.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AdjacencyTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdjacencyTableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyTableTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WeaverWords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WeaverWords.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +85,7 @@
       <workItem from="1700580689676" duration="1280000" />
       <workItem from="1700583418401" duration="2759000" />
       <workItem from="1700733035201" duration="1971000" />
+      <workItem from="1701162576818" duration="4330000" />
     </task>
     <task id="LOCAL-00001" summary="Files added">
       <option name="closed" value="true" />

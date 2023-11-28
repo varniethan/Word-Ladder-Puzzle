@@ -13,15 +13,16 @@ public class AdjacencyTable {
      * Static method -> Creates a graph corresponding to the word-ladder game
      * */
     public AdjacencyTable(String[] nodes) {
-        int capacity = 2*nodes.length;
+        int capacity = 2 * nodes.length;
         this.table = new GraphNode[capacity];
         for (String node : nodes) {
             int hashValue = calculateHash(node);
             if (this.checkCollisions(hashValue, node)) {
                 int probeIndex = probe(hashValue);
-                this.table[probeIndex] = new GraphNode(node);
-            }
-            else {
+                if (this.table[probeIndex] == null) {
+                    this.table[probeIndex] = new GraphNode(node);
+                }
+            } else {
                 this.table[hashValue] = new GraphNode(node);
             }
         }
@@ -65,8 +66,7 @@ public class AdjacencyTable {
         if (this.table[hashValue] != null) {
             if (this.table[hashValue].label.equals(s)) {
                 isFound = true;
-            }
-            else {
+            } else {
                 int probeIndex = this.probe(hashValue);
                 if (this.table[probeIndex] != null) {
                     if (this.table[probeIndex].label.equals(s)) {
@@ -82,15 +82,28 @@ public class AdjacencyTable {
     public GraphNode get(String s) {
         GraphNode node = null;
         int hashValue = calculateHash(s);
-        if (this.table[hashValue] != null) {
-            if (this.table[hashValue].label.equals(s)) {
+        //if the node is not null and the label is equal to s
+        if (this.table[hashValue] != null)
+        {
+            if (this.table[hashValue].label.equals(s))
+            {
                 node = this.table[hashValue];
             }
-            else {
-                int probeIndex = this.probe(hashValue);
-                if (this.table[probeIndex] != null) {
-                    if (this.table[probeIndex].label.equals(s)) {
-                        node = this.table[probeIndex];
+            else
+            {
+                while (this.table[hashValue] != null)
+                {
+                    hashValue = (hashValue + 1) % this.table.length;
+                    if (this.table[hashValue] != null)
+                    {
+                        if (this.table[hashValue].label.equals(s))
+                        {
+                            node = this.table[hashValue];
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
@@ -117,8 +130,7 @@ public class AdjacencyTable {
         visited.add(start);
         pathMap.put(start, s);
 
-        while (!queue.isEmpty())
-        {
+        while (!queue.isEmpty()) {
             GraphNode currentNode = queue.remove();
             for (int i = 0; i < currentNode.neighbours.length; i++) {
                 if (currentNode.neighbours[i] == null) {
@@ -129,8 +141,7 @@ public class AdjacencyTable {
                     pathMap.put(neighbour, pathMap.get(currentNode) + "-" + neighbour.label);
                     if (neighbour.equals(end)) {
                         return pathMap.get(neighbour); //path found
-                    }
-                    else {
+                    } else {
                         queue.add(neighbour);
                         visited.add(neighbour);
                     }
@@ -141,86 +152,17 @@ public class AdjacencyTable {
     }
 
     public boolean existsPath(String s, String t) {
-        GraphNode start = this.get(s);
-        GraphNode end = this.get(t);
-        boolean existsPath = false;
-        if (start == null && end == null) {
-            existsPath = false;
-        }
-
-        if (start.equals(end)) {
-            existsPath = true;
-        }
-
-        Queue<GraphNode> queue = new LinkedList<>();
-        ArrayList<GraphNode> visited = new ArrayList<>();
-
-        queue.add(start);
-        visited.add(start);
-
-        while (!queue.isEmpty()) {
-            GraphNode currentNode = queue.remove();
-            if (currentNode.equals(end)) {
-                existsPath = true;
-                break;
-            }
-            else {
-                for (int i = 0; i < currentNode.neighbours.length; i++) {
-                    if (currentNode.neighbours[i] != null) {
-                        GraphNode neighbour = this.get(currentNode.neighbours[i]);
-                        if (!visited.contains(neighbour)) {
-                            queue.add(neighbour);
-                            visited.add(neighbour);
-                        }
-                    }
-                }
-            }
-        }
-        return existsPath;
+        String path = this.getPath( s, t);
+        return !path.equals("There is no path from " + s + " to " + t);
     }
 
     public int pathLength(String s, String t) {
-        GraphNode start = this.get(s);
-        GraphNode end = this.get(t);
-        int pathLength = 0;
-        if (start == null && end == null) {
-            pathLength = 0;
+        String path = this.getPath(s, t);
+        if (path.equals("There is no path from " + s + " to " + t)) {
+            return 0;
+        } else {
+            return path.split("-").length;
         }
-
-        if (start.equals(end)) {
-            pathLength = 1;
-        }
-
-        Queue<GraphNode> queue = new LinkedList<>();
-        ArrayList<GraphNode> visited = new ArrayList<>();
-        Map<GraphNode, Integer> distance = new HashMap<>();
-
-        queue.add(start);
-        visited.add(start);
-        distance.put(start, 1);
-
-
-        while (!queue.isEmpty()) {
-            GraphNode currentNode = queue.remove();
-            int currentDistance = distance.get(currentNode);
-            if (currentNode.equals(end)) {
-                pathLength = currentDistance;
-                break;
-            }
-            else {
-                for (int i = 0; i < currentNode.neighbours.length; i++) {
-                    if (currentNode.neighbours[i] != null) {
-                        GraphNode neighbour = this.get(currentNode.neighbours[i]);
-                        if (!visited.contains(neighbour)) {
-                            queue.add(neighbour);
-                            visited.add(neighbour);
-                            distance.put(neighbour, currentDistance+1);
-                        }
-                    }
-                }
-            }
-        }
-        return pathLength;
     }
 
     public static List<String> generateNeighbours(String word, String[] words) {
@@ -230,7 +172,7 @@ public class AdjacencyTable {
             for (char c = 'a'; c <= 'z'; c++) {
                 wordArray[i] = c;
                 String newWord = new String(wordArray);
-                if (Arrays.asList(words).contains(newWord)) {
+                if (isValidWord(newWord, words)) {
                     neighbours.add(newWord);
                 }
             }
@@ -246,17 +188,12 @@ public class AdjacencyTable {
         String[] words = WeaverWords.words;
         AdjacencyTable wordLadder = new AdjacencyTable(words);
         for (String word : words) {
+            GraphNode wordNode = wordLadder.get(word);
             List<String> neighbours = generateNeighbours(word, words);
             for (String neighbour : neighbours) {
-                System.out.println("neighbour" + neighbour);
-                System.out.println("word" + word);
-                if ((neighbour != null) && (isValidWord(neighbour, words)) && (!neighbour.equals(word))) {
-                    GraphNode wordNode = wordLadder.get(word);
-                    if (wordNode != null) {
-                    wordNode.addNeighbour(neighbour);
-                }
+                wordNode.addNeighbour(neighbour);
             }
         }
-        return wordLadder;
+            return wordLadder;
     }
 }
