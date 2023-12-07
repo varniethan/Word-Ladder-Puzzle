@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cbc7da88-3516-40df-96b6-09cc4cfaf33f" name="Changes" comment="TODO: Notfinding path">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="cbc7da88-3516-40df-96b6-09cc4cfaf33f" name="Changes" comment="All tests passed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Word-Ladder-Puzzle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Word-Ladder-Puzzle.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AdjacencyTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdjacencyTableTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdjacencyTableTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WeaverWords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WeaverWords.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +81,8 @@
       <workItem from="1700583418401" duration="2759000" />
       <workItem from="1700733035201" duration="1971000" />
       <workItem from="1701162576818" duration="4330000" />
+      <workItem from="1701167134431" duration="120000" />
+      <workItem from="1701362730252" duration="566000" />
     </task>
     <task id="LOCAL-00001" summary="Files added">
       <option name="closed" value="true" />
@@ -119,7 +116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700389100746</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="All tests passed">
+      <option name="closed" value="true" />
+      <created>1701167251179</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1701167251179</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,6 +145,7 @@
     <MESSAGE value="Files added" />
     <MESSAGE value="TODO: Queue needs to be created" />
     <MESSAGE value="TODO: Notfinding path" />
-    <option name="LAST_COMMIT_MESSAGE" value="TODO: Notfinding path" />
+    <MESSAGE value="All tests passed" />
+    <option name="LAST_COMMIT_MESSAGE" value="All tests passed" />
   </component>
 </project>

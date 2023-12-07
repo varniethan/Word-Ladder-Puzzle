@@ -61,21 +61,7 @@ public class AdjacencyTable {
 
     // search the hash table for a node with label s
     public boolean find(String s) {
-        boolean isFound = false;
-        int hashValue = calculateHash(s);
-        if (this.table[hashValue] != null) {
-            if (this.table[hashValue].label.equals(s)) {
-                isFound = true;
-            } else {
-                int probeIndex = this.probe(hashValue);
-                if (this.table[probeIndex] != null) {
-                    if (this.table[probeIndex].label.equals(s)) {
-                        isFound = true;
-                    }
-                }
-            }
-        }
-        return isFound;
+        return this.get(s) != null;
     }
 
     //returns the GraphNode object labelled with s or null pointer if s does not exist in the table
